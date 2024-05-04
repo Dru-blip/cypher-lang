@@ -1,0 +1,122 @@
+{
+  "body": [
+    {
+      "IFStatement": {
+        "condition": {
+          "BinaryExpression": {
+            "lhs": {
+              "Literal": {
+                "value": {
+                  "kind": "Number",
+                  "location": {
+                    "line": 3,
+                    "col": 5,
+                    "index": 8
+                  },
+                  "value": "4"
+                }
+              }
+            },
+            "op": {
+              "kind": "LessThan",
+              "location": {
+                "line": 3,
+                "col": 6,
+                "index": 9
+              },
+              "value": null
+            },
+            "rhs": {
+              "Literal": {
+                "value": {
+                  "kind": "Number",
+                  "location": {
+                    "line": 3,
+                    "col": 7,
+                    "index": 10
+                  },
+                  "value": "9"
+                }
+              }
+            }
+          }
+        },
+        "then": {
+          "BlockStatement": {
+            "statements": [
+              {
+                "PrintStatement": {
+                  "expr": {
+                    "GroupingExpression": {
+                      "exp": {
+                        "Literal": {
+                          "value": {
+                            "kind": "Number",
+                            "location": {
+                              "line": 4,
+                              "col": 12,
+                              "index": 24
+                            },
+                            "value": "5"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "_else": {
+          "BlockStatement": {
+            "statements": [
+              {
+                "PrintStatement": {
+                  "expr": {
+                    "GroupingExpression": {
+                      "exp": {
+                        "Literal": {
+                          "value": {
+                            "kind": "Number",
+                            "location": {
+                              "line": 6,
+                              "col": 12,
+                              "index": 46
+                            },
+                            "value": "4"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "PrintStatement": {
+        "expr": {
+          "GroupingExpression": {
+            "exp": {
+              "Literal": {
+                "value": {
+                  "kind": "Number",
+                  "location": {
+                    "line": 9,
+                    "col": 8,
+                    "index": 61
+                  },
+                  "value": "9"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
