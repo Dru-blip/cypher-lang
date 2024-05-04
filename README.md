@@ -2,6 +2,72 @@
 
 cypher-lang is dynamically typed interpreted language written in rust. cypher lang compiles down to cypher bytecode interpreted by cypher virtual machine.
 
+# cypher syntax
+
+### Data Types
+```
+let boolean = false or true
+let strings = "hello world!"
+let numbers = 555
+let arrays = [1,2,3,4]
+```
+### control flow
+
+#### if Statements
+```
+let i=5
+if  i%2==0{
+   print("even")
+}else{
+   print("odd")
+}
+```
+
+#### while loop
+
+```
+let n=0
+while n<=10{
+   print(n)
+   n++
+}
+```
+
+### Functions
+
+```
+def fact(num){
+   let res=1
+   let i=1
+   while i<num{
+      res=res*i
+      i++
+   }
+   return res
+}
+
+let hello=def (){
+   print("hello world!")
+}
+
+hello()
+let a=fact(5) 
+
+```
+### Builtins
+
+#### len() function
+```
+let a=len("hello") //returns length of string
+let b=len([1,2,3]) //returns length of array
+```
+
+#### push function
+
+```
+let a=[1,2,3,4]
+push(a,5)
+```
 
 # cypher grammar
 ```
