@@ -4,4 +4,4 @@
 resolver="2"
 
 
-members=["cypher", "sandbox"]
+members=[ "cli","cypher", "sandbox"]
