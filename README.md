@@ -152,6 +152,7 @@ examples/hello.cy:
 - [x] global variables
 - [x] bytecode generator
 - [ ] local scopes
+- [ ] functions and function calls
 - [ ] implement vm
 - [ ] implement modules
 - [ ] implement std
