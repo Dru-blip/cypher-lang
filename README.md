@@ -101,27 +101,49 @@ primary        → NUMBER | STRING | "true" | "false" | "nil"|identifier
 ```
 # cypher bytecode
 
-| opcode | operands | description |
-| --------| -------- | ----------- |
-| `LC` | 1 | Load constant |
-| `ADD` | 2 | Addition Operator |
-| `SUB` | 2 | Subtraction Operator |
-| `MUL` | 2 | Multiplication Operator|
-| `DIV` | 2 | Division Operator |
-| `MOD` | 2 | Modulo Operator|
-|`PRINT`| 0 | Call Print Function |
-|`CALL`| 1| Call operator|
-|`LT`| 2| Less than Operator|
-|`GT`| 2| Greater than Operator|  
-|`GOE`| 2| Greater than Equal Operator|  
-|`LOE`| 2| Less than Equal Operator|
-|`JMP`| 1 | Jump |
-|`JNE`| 1 | Jump not equal |
-|`Get Global`|1| get global variable|
-|`NOP`| |No Operation|  
+| opcode       | operands | description                 |
+| ------------ | -------- | --------------------------- |
+| `LC`         | 1        | Load constant               |
+| `ADD`        | 2        | Addition Operator           |
+| `SUB`        | 2        | Subtraction Operator        |
+| `MUL`        | 2        | Multiplication Operator     |
+| `DIV`        | 2        | Division Operator           |
+| `MOD`        | 2        | Modulo Operator             |
+| `PRINT`      | 0        | Call Print Function         |
+| `CALL`       | 1        | Call operator               |
+| `LT`         | 2        | Less than Operator          |
+| `GT`         | 2        | Greater than Operator       |
+| `GOE`        | 2        | Greater than Equal Operator |
+| `LOE`        | 2        | Less than Equal Operator    |
+| `JMP`        | 1        | Jump                        |
+| `JNE`        | 1        | Jump not equal              |
+| `Get Global` | 1        | get global variable         |
+| `NOP`        |          | No Operation                |
 
+### source
+```
+let a=3
 
-
+if a<5{
+    print("less")
+}else{
+    print("greater")
+}
+```
+generated  bytecode
+```
+examples/hello.cy:
+      lc     3
+      get    3
+      lc     5
+      le
+      jne    14
+      lc     less
+      print
+      jmp    17
+      lc     greater
+      print
+```
 
 # Todo
 - [x] lexer
