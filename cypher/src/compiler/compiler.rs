@@ -1,13 +1,18 @@
+use std::process::ExitCode;
+
 use crate::{
     lexer::token::{Token, TokenType},
     parser::expr::{Expression, Program, Statement},
     vm::{chunk::Chunk, object::Object, opcode::Opcode},
 };
 
+use super::symbol_table::{Symbol, SymbolScope, SymbolTable};
+
 pub struct Compiler {
     chunk: Chunk,
     filename: String,
     scope_depth: usize,
+    symboltable:SymbolTable
 }
 
 impl Compiler {
@@ -16,6 +21,7 @@ impl Compiler {
             chunk: Chunk::new(filename.to_owned()),
             filename,
             scope_depth: 0,
+            symboltable:SymbolTable::new()
         }
     }
 
@@ -44,6 +50,8 @@ impl Compiler {
         for statement in statements {
             self.compile_statement(statement)
         }
+
+        
     }
 
     fn compile_statement(&mut self, statement: &Statement) {
@@ -53,7 +61,16 @@ impl Compiler {
                 self.compile_expression(expr);
                 self.chunk.write_byte(Opcode::PRINT as u8)
             }
-            Statement::VariableStatement { ident, expr } => todo!(),
+            Statement::VariableStatement { ident, expr } => {
+                if let Some(statement)=expr {
+                    self.compile_statement(statement);
+                }
+                else{
+                    self.chunk.add_constant(Object::Nil);
+                }
+                self.symboltable.define(ident.value.as_ref().unwrap().to_owned(),self.scope_depth,SymbolScope::GLOBAL,self.chunk.constants.len()-1);
+                
+            },
             Statement::IFStatement {
                 condition,
                 then,
@@ -105,7 +122,12 @@ impl Compiler {
 
     fn compile_expression(&mut self, expression: &Expression) {
         match expression {
-            Expression::VariableAssignment { identifier, expr } => todo!(),
+            Expression::VariableAssignment { identifier, expr } => {
+                self.compile_expression(expr);
+                if let Some(symbol)=self.symboltable.resolve(identifier.value.as_ref().unwrap()){
+                    
+                }
+            },
             Expression::GroupingExpression { exp } => {
                 self.compile_expression(exp);
             }
@@ -118,7 +140,10 @@ impl Compiler {
                 self.compile_expression(rhs);
                 self.emit_opcode(op)
             }
-            Expression::IncrementDecrement { op, identifier } => todo!(),
+            Expression::IncrementDecrement { op, identifier } => {
+
+                self.emit_opcode(op);
+            },
             Expression::ArrayDeclaration { elements } => todo!(),
             Expression::ArrayIndexing { ident, index } => todo!(),
             Expression::FunctionCall { calle, args } => todo!(),
@@ -135,6 +160,28 @@ impl Compiler {
                             .parse()
                             .unwrap_or(0.0),
                     ));
+                    self.chunk.write_byte(index as u8);
+                }
+                TokenType::Identifier=>{
+                    if let Some(symbol)=self.symboltable.resolve(value.value.as_ref().unwrap()){
+                        self.chunk.write_byte(Opcode::GETGLOBAL as u8);
+                        self.chunk.write_byte(symbol.index as u8);
+                    }
+                    // self.chunk.write_byte(Opcode::GETGLOBAL as u8);
+                }
+                TokenType::True=>{
+                    self.chunk.write_byte(Opcode::LC as u8);
+                    let index=self.chunk.add_constant(Object::Boolean(true));
+                    self.chunk.write_byte(index as u8);
+                }
+                TokenType::False=>{
+                    self.chunk.write_byte(Opcode::LC as u8);
+                    let index=self.chunk.add_constant(Object::Boolean(false));
+                    self.chunk.write_byte(index as u8);
+                }
+                TokenType::String=>{
+                    self.chunk.write_byte(Opcode::LC as u8);
+                    let index=self.chunk.add_constant(Object::Str(value.value.as_ref().unwrap().to_owned()));
                     self.chunk.write_byte(index as u8);
                 }
                 _ => todo!(),

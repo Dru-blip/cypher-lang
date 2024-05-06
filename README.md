@@ -117,6 +117,7 @@ primary        → NUMBER | STRING | "true" | "false" | "nil"|identifier
 |`LOE`| 2| Less than Equal Operator|
 |`JMP`| 1 | Jump |
 |`JNE`| 1 | Jump not equal |
+|`Get Global`|1| get global variable|
 |`NOP`| |No Operation|  
 
 
@@ -125,9 +126,10 @@ primary        → NUMBER | STRING | "true" | "false" | "nil"|identifier
 # Todo
 - [x] lexer
 - [x] parser
-- [ ] bytecode generator
-- [ ] symbol scopes and symbol table
+- [x] symbol table
+- [x] global variables
+- [x] bytecode generator
 - [ ] local scopes
-- [ ] bytecode interpreter
+- [ ] implement vm
 - [ ] implement modules
 - [ ] implement std

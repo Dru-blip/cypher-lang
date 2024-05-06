@@ -38,6 +38,7 @@ impl VM {
             Object::Number(_) => true,
             Object::Nil => false,
             Object::Boolean(b) => *b,
+            Object::Str(_) => true,
         }
     }
 
@@ -48,14 +49,7 @@ impl VM {
                 let right=self.pop();
                 match (left,right) {
                     (Object::Number(a), Object::Number(b)) => self.push(Object::Number(a+b)),
-                    (Object::Number(_), Object::Nil) => todo!(),
-                    (Object::Nil, Object::Number(_)) => todo!(),
-                    (Object::Nil, Object::Nil) => todo!(),
-                    (Object::Number(_), Object::Boolean(_)) => todo!(),
-                    (Object::Nil, Object::Boolean(_)) => todo!(),
-                    (Object::Boolean(_), Object::Number(_)) => todo!(),
-                    (Object::Boolean(_), Object::Nil) => todo!(),
-                    (Object::Boolean(_), Object::Boolean(_)) => todo!(),
+                    _=>todo!()
                 }
             }
             Opcode::PUSH => {
@@ -95,19 +89,21 @@ impl VM {
                 let right=self.pop();
                 match (left,right) {
                     (Object::Number(a), Object::Number(b)) => self.push(Object::Boolean(a<b)),
-                    (Object::Number(_), Object::Nil) => todo!(),
-                    (Object::Nil, Object::Number(_)) => todo!(),
-                    (Object::Nil, Object::Nil) => todo!(),
-                    (Object::Number(_), Object::Boolean(_)) => todo!(),
-                    (Object::Nil, Object::Boolean(_)) => todo!(),
-                    (Object::Boolean(_), Object::Number(_)) => todo!(),
-                    (Object::Boolean(_), Object::Nil) => todo!(),
-                    (Object::Boolean(_), Object::Boolean(_)) => todo!(),
+                    _=>todo!()
                 }
             },
             Opcode::GT => todo!(),
             Opcode::GOE => todo!(),
             Opcode::LOE => todo!(),
+            Opcode::GETGLOBAL => {
+                let index=self.read_next_8bytes();
+                let obj=self.get_current_frame().get_constant(index as usize).to_owned();
+                self.push(obj);
+            },
+            Opcode::SETGLOBAL => todo!(),
+            Opcode::REASSIGN => todo!(),
+            Opcode::GETLOCAL => todo!(),
+            Opcode::SETLOCAL => todo!(),
         }
     }
 

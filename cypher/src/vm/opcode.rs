@@ -15,6 +15,12 @@ pub enum Opcode {
     GT,
     GOE,
     LOE,
+
+    GETGLOBAL,
+    SETGLOBAL,
+    REASSIGN,
+    GETLOCAL,
+    SETLOCAL,
     NOP
 }
 
@@ -36,6 +42,11 @@ impl From<u8> for Opcode {
             12=>Opcode::GT,
             13=>Opcode::GOE,
             14=>Opcode::LOE,
+            15=>Opcode::GETGLOBAL,
+            16=>Opcode::SETGLOBAL,
+            17=>Opcode::REASSIGN,
+            18=>Opcode::GETLOCAL,
+            19=>Opcode::SETLOCAL,
             _=>Opcode::NOP
         }
     }

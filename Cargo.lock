@@ -281,6 +281,9 @@ checksum = "77e53693616d3075149f4ead59bdeecd204ac6b8192d8969757601b74bddf00f"
 [[package]]
 name = "cli"
 version = "0.1.0"
+dependencies = [
+ "cypher",
+]
 
 [[package]]
 name = "clipboard-win"
